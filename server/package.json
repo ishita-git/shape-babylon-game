@@ -1,0 +1,14 @@
+{
+    "name": "colyseus-server",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.js",
+    "dependencies": {
+        "colyseus": "^0.14.9",
+        "cors": "^2.8.5",
+        "express": "^4.17.1"
+    },
+    "scripts": {
+        "start": "node index.js"
+    }
+}
