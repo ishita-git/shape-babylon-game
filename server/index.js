@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
-import { Server } from 'colyseus';
+import pkg from 'colyseus';
+const { Server } = pkg;
 import GameRoom from './rooms/GameRoom.js';
 import { matchMaker } from "@colyseus/core";
 

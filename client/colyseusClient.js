@@ -6,19 +6,27 @@ class CustomClient extends Colyseus.Client {
         super(url);
     }
 
-    createRequest(route, method = "POST", options = {}) {
+    createRequest(route, method = "GET", options = {}) {
         options.credentials = 'include';  
         return fetch(route, options);
     }
 }
 
-const client = new CustomClient("ws://localhost:2567");
+const client = new CustomClient("ws://localhost:3000/api");
 
 let room;
 
 export async function connectToRoom() {
     try {
         room = await client.joinOrCreate("game_room");
+
+        displayMessage("GameRoom created!", "green");
+
+         // Verify state synchronization with the schema
+         room.onStateChange((state) => {
+            console.log("Received state change:", state);  // Should log your GameState
+        });
+
 
         // Listen for shape updates from other players
         room.onMessage("update_shape", (message) => {
@@ -58,4 +66,12 @@ function handleShapeUpdate(id, shape, position) {
 
 function removeShape(id) {
     console.log(`Removing shape for ${id}`);
+}
+
+// Helper function to display messages with color on the UI
+function displayMessage(text, color) {
+    const messageElement = document.createElement("div");
+    messageElement.innerText = text;
+    messageElement.style.color = color;
+    document.getElementById("player-info").appendChild(messageElement);
 }
